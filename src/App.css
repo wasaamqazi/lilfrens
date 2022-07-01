@@ -1,38 +1,609 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: volkswagen-serial-black-regular;
+  src: url(../public/assets/fonts/volkswagen-serial-black-regular.ttf);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+li {
+  list-style: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+  padding: 0px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+ul.navigation {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: 20px;
+}
+
+a.nav-links {
+  padding: 10px 20px;
+  background: black;
+  color: white;
+  margin: 13px;
+  border-radius: 13px;
+  text-decoration: none;
+  font-size: 19px;
+  font-family: 'volkswagen-serial-black-regular';
+}
+
+a.nav-links.connect-wallet {
+  background: white;
+  border: 3px solid #000;
+  color: black;
+  padding: 8px 20px;
+}
+
+img.banner {
+
+  width: 100%;
+  z-index: -1;
+}
+
+a.nav-links:hover {
+  color: white;
+  background: #f77d28;
+}
+
+img.logo {
+  width: 250px;
+}
+
+
+
+/* 
+.top-left {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+} */
+
+/* .containers {
+  position: relative;
+  text-align: center;
+  color: white;
+} */
+
+
+.hero-section {}
+
+.bbody {
+  background: linear-gradient(180deg, #D3CDD7 0%, #C2CCF7 24.45%, #F69AF4 47.38%, #5157F0 73.44%, #EC5ABB 100%);
+}
+
+.sellauction {
+  color: #ffffff;
+}
+
+h1.first-tit {
+  font-family: 'volkswagen-serial-black-regular';
+  color: #673DDF;
+  text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.42);
+}
+
+.text-wrapper {
+  display: flex;
+
+  align-items: flex-end;
+}
+
+header {
+  padding-top: 30px;
+  position: absolute;
+  width: 100%;
+}
+
+.text-wrapper {
+  display: flex;
+  align-items: flex-end;
+  position: absolute;
+  top: 400px;
+}
+
+a.banner-btn {
+  background: black;
+  padding: 15px 25px;
+  border-radius: 13px;
+  color: white;
+  text-decoration: none;
+  font-family: 'volkswagen-serial-black-regular';
+  font-size: 20px;
+}
+
+a.banner-btn:hover {
+  color: white;
+  background: #f77d28;
+}
+
+.btn-wrapper {
+  padding-top: 20px;
+}
+
+
+
+.bbody {
+  padding-top: 80px;
+  padding-bottom: 80pxg;
+}
+
+
+img.fren {
+  border-radius: 13px;
+
+}
+
+img.fren1 {
+
+  border-radius: 13px;
+  margin: 4px;
+}
+
+.fourwrap {
+  display: flex;
+}
+
+
+
+li.footer-single {
+  color: white;
+  padding: 10px 30px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+ul.footer-links {
+  margin: 0;
+  display: flex;
+  padding: 0;
+}
+
+footer {
+  padding: 200px 0px;
+}
+
+.fourwrap div {
+  /* width: 25%; */
+}
+
+
+.for-flex-all {
+  display: flex;
+}
+
+
+
+.first-coloum {
+  width: 20%;
+  margin-left: 4px;
+}
+
+p.heart {
+  background: #343444E5;
+  border-radius: 10px;
+  padding: 4px 14px;
+  color: white;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.second-coloum {
+  width: 47%;
+}
+
+img.heart {
+  width: 20px;
+  margin-right: 7px;
+  display: inline !important;
+}
+
+.full-card {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+
+.disabled {
+  padding: 0 10px;
+}
+
+.full-card-active {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* img.fren1.first-img {
+  max-width: 170px;
+  padding: 38px 0px;
+} */
+
+.second-coloum {
+  width: 56%;
+  padding-left: 16px;
+}
+
+h3.creative {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 6px;
+  line-height: 20px;
+}
+
+p.createdby {
+  color: #817C7C;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 13px;
+  margin-bottom: 0;
+  line-height: 16px;
+}
+
+.third-coloum p {
+  margin-bottom: 0px;
+
+}
+
+
+p.current-bid {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 14px;
+  padding-top: 4px;
+}
+
+p.frens {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+
+}
+
+
+.first-one {
+  float: left;
+  width: 80%;
+}
+
+.secone-one {
+  float: left;
+
+}
+
+.bsc {
+  background: #5F1BF0;
+  color: white;
+  padding: 2px 10px;
+  text-transform: uppercase;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.for-flexing {
+  display: flex;
+  align-items: flex-start;
+
+}
+
+h3.creative.second {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 6px;
+  line-height: 20px;
+  padding-left: 8px;
+}
+
+p.current-bid {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 14px;
+  padding-top: 0px;
+  margin-bottom: 0;
+}
+
+.creator-details {
+  padding-left: 10px;
+  padding-top: 13px;
+}
+
+.creator-details {
+  padding-left: 5px;
+  padding-top: 0px;
+
+}
+
+img.prof-img {
+  padding-left: 9px;
+  width: 63px;
+}
+
+.second-details {
+  padding-top: 0px;
+}
+
+.full-card.secondcard img.fren {
+  padding: 0 0px;
+}
+
+.img-two-text {
+  width: 65%;
+}
+
+.for-flexing.five-image {
+  padding-top: 15px;
+}
+
+span.lilfrens {
+  color: #FF5EF9;
+  text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.42);
+}
+
+p.heart.third-heart {
+  position: relative;
+  bottom: 238px;
+  width: 83px;
+  right: -152px;
+  margin-bottom: -22px;
+}
+
+p.heart.second-heart {
+  position: relative;
+  bottom: 238px;
+  width: 83px;
+  right: -152px;
+  margin-bottom: -22px;
+}
+
+p.heart.fourth-heart {
+  position: relative;
+  bottom: 238px;
+  width: 83px;
+  right: -152px;
+  margin-bottom: -22px;
+}
+
+.for-flexing.second-flexing {
+  padding-top: 10px;
+}
+
+.for-flexing.first-flexing {
+  padding-top: 7px;
+}
+
+h3.liveaction {
+  font-family: 'volkswagen-serial-black-regular';
+  color: white;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 1px;
+  font-size: 40px;
+  padding-left: 23px;
+  padding-bottom: 70px;
+}
+
+/* .for-flex-all {
+  display: none;
+} */
+
+.full-card.secondcard img.fren {
+  width: 100%;
+}
+
+.timer {
+  background: #343444;
+  max-width: 175px;
+  border-radius: 10px;
+  color: white;
+  padding: 6px 10px;
+  margin: 0 auto;
+  position: relative;
+  top: -151px;
+  margin-bottom: -45px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  letter-spacing: 0.11em;
+}
+
+.timers {
+  background: #343444;
+  max-width: 167px;
+  border-radius: 10px;
+  color: white;
+  padding: 6px 10px;
+  margin: 0 auto;
+  position: relative;
+  top: -60px;
+  margin-bottom: -45px;
+  font-family: 'Montserrat Alternates', sans-serif;
+  letter-spacing: 0.11em;
+}
+
+p.heart.second-heart {
+  position: relative;
+  bottom: 274px;
+  width: 86px;
+  right: -182px;
+  margin-bottom: -22px;
+}
+
+img.fren1 {
+  border-radius: 13px;
+  margin: 4px;
+  width: 124px;
+}
+
+.disabled {
+  height: 100%;
+  background: black;
+  border-radius: 10px;
+  box-shadow: 1px 2px 1px #000;
+}
+
+.disabled {
+  height: 100%;
+  background: black;
+  border-radius: 10px;
+  box-shadow: 1px 2px 1px #000;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+a.coming-soon {
+  background: #B2E916;
+  box-shadow: 0px 0px 14.2599px rgba(178, 233, 22, 0.8);
+  border-radius: 26.3619px;
+  color: black;
+  text-decoration: none;
+  padding: 10px 17px;
+  font-weight: 700;
+  font-family: 'Montserrat Alternates';
+  font-size: 20px;
+}
+
+a.coming-soon:hover {
+  color: black;
+}
+
+
+.place-bid-btn:hover {
+  color: black;
+}
+
+img.placebidico {
+  margin-right: 7px;
+  margin-top: -5px;
+}
+
+
+
+
+
+button.place-bid-btn.btn.btn-primary:focus {
+  border: none;
+  box-shadow: 0px 0px 9px 0px #9d7ff9;
+}
+
+a.footer-links {
   color: white;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+p.must-bid {
+  text-align: center;
+  font-family: 'Montserrat Alternates';
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+input.bid-input {
+  padding-left: 10px;
+  border-radius: 10px;
+  border: 0.788185px solid #888888;
+  border-radius: 4.72911px;
+  padding: 10px 10px 10px 10px;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+h3.placeabid-tit {
+  font-family: 'Montserrat Alternates';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18.2263px;
+  line-height: 22px;
+  text-transform: capitalize;
+  color: #000000;
+  text-align: center;
+  width: 100%;
+}
+
+input#vol {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.for-flexing-must {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 20px 50px !important;
+}
+
+button.place-bid-end.btn.btn-primary {
+  background: black;
+  font-family: 'Montserrat Alternates';
+  font-weight: 600;
+  background: #363A3A;
+  border-radius: 16.5519px;
+  width: 100%;
+  margin: 0px 30px;
+}
+
+.footer-social-wrap {
+  display: flex;
+  justify-content: end;
+}
+
+/* .place-bid {
+  margin-bottom: -38px;
+} */
+
+/* div#place-a-bid-btn {
+  background: #0000009c;
+  position: absolute;
+  width: 416px;
+  height: 441px;
+  margin-top: -430px;
+  margin-left: -10px;
+  border-radius: 13px;
+} */
+
+@media(max-width:1400px) {
+  img.fren1 {
+
+    width: 101px;
   }
-  to {
-    transform: rotate(360deg);
-  }
+
+  /* div#place-a-bid-btn {
+
+    position: absolute;
+    width: 357px;
+    height: 433px;
+    margin-top: -415px;
+    margin-left: -10px;
+    border-radius: 13px;
+  } */
+}
+
+button#claim-btn {
+  background: #b2e916 !important;
+  color: black !important;
+  font-weight: 700;
+  display: none;
+}
+
+div#place-a-bid-btn {
+  text-align: center;
+  padding: 10px 0px;
+}
+
+button.place-bid-btn.btn.btn-primary {
+  background: white !important;
+  color: black;
+  font-family: 'Montserrat Alternates';
+  border: none;
+  font-weight: 600;
+  border-radius: 9px;
+  box-shadow: 0px 0px 9px 0px #9d7ff9;
+  width: 90%;
+  /* margin: 0 0px; */
+}
+
+a.footer-links:hover {
+  color: #eaeaea;
 }
