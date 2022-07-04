@@ -1,6 +1,6 @@
 @font-face {
   font-family: volkswagen-serial-black-regular;
-  src: url(../public/assets/fonts/volkswagen-serial-black-regular.ttf);
+  src: url(./fonts/volkswagen-serial-black-regular.ttf);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -30,17 +30,46 @@ a.nav-links {
   font-family: 'volkswagen-serial-black-regular';
 }
 
-a.nav-links.connect-wallet {
-  background: white;
+.auction_closed {
+  color: white;
+  border-radius: 13px;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: 'volkswagen-serial-black-regular';
+}
+
+/* button.nav-links {
+  padding: 10px 20px;
+  background: black;
+  color: white;
+  margin: 13px;
+  border-radius: 13px;
+  text-decoration: none;
+  font-size: 19px;
+  font-family: 'volkswagen-serial-black-regular';
+} */
+
+button.nav-links.connect-wallet {
+  background: black;
   border: 3px solid #000;
-  color: black;
+  color: white;
   padding: 8px 20px;
+  text-decoration: none;
+  font-size: 19px;
+  font-family: 'volkswagen-serial-black-regular';
+  margin: 13px;
+  border-radius: 13px;
 }
 
 img.banner {
 
   width: 100%;
   z-index: -1;
+}
+
+button.nav-links:hover {
+  color: white;
+  background: #f77d28;
 }
 
 a.nav-links:hover {
@@ -80,7 +109,7 @@ img.logo {
 
 h1.first-tit {
   font-family: 'volkswagen-serial-black-regular';
-  color: #673DDF;
+  color: #38d41e;
   text-shadow: 0px 3px 2px rgba(0, 0, 0, 0.42);
 }
 
@@ -406,7 +435,7 @@ h3.liveaction {
 
 .timers {
   background: #343444;
-  max-width: 167px;
+  max-width: 170px;
   border-radius: 10px;
   color: white;
   padding: 6px 10px;
