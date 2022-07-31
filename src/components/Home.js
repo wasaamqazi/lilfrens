@@ -53,10 +53,14 @@ const Home = (props) => {
   const [currBidS, setCurrBidS] = useState("");
   const [indexS, setIndexS] = useState("");
 
+  const [frensCount, setFrensCount] = useState("");
+
   window.scrollTo(0, 0);
 
-  const contractAuctionAddress = "0xB7123e97618a136ba140a5ec1B26737DbBAc6dc9";
-  const tokenContract = "0x2EDD7A51D82220Bb878980ff892380720442D892";
+  // const contractAuctionAddress = "0xB7123e97618a136ba140a5ec1B26737DbBAc6dc9";
+  // const tokenContract = "0x2EDD7A51D82220Bb878980ff892380720442D892";
+  const tokenContract = "0xFA30f8e110465056af8D2C3cF30b757ae061e9a2";
+  const contractAuctionAddress = "0xD7300e11c28af2100B8F2C52907321DDa5C8e41C";
 
 
   function timeout(delay) {
@@ -69,6 +73,7 @@ const Home = (props) => {
 
     getData();
     getDataS();
+    getFrensCount();
 
     addWalletListener();
   }, []);
@@ -80,48 +85,53 @@ const Home = (props) => {
     try {
       window.contract = await new web3.eth.Contract(contractAuctionABI, contractAuctionAddress);
       const all_bundle = await window.contract.methods.getBundleAllList().call();
-
       var auctionData = [];
 
       for (var i = 0; i < all_bundle.length; i++) {
         const contractNftABI = require('../abi/lilfrens_nft_abi.json');
         const contractNftAddress = all_bundle[i].addressNFTCollection;
-        window.contract = await new web3.eth.Contract(contractNftABI, contractNftAddress);
+        window.contract1 = await new web3.eth.Contract(contractNftABI, contractNftAddress);
 
         var images_data = [];
 
         for (var j = 0; j < all_bundle[i].nftId.length; j++) {
-          const nUrl = await window.contract.methods.tokenURI(all_bundle[i].nftId[j]).call();
+          let nUrl = await window.contract1.methods.tokenURI(all_bundle[i].nftId[j]).call();
+          if (nUrl.includes("ipfs://")) {
+            nUrl = nUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
+          }
           const response = await fetch(nUrl);
           if (!response.ok) {
             throw new Error('Something went wrong');
           }
           const nft_data = await response.json();
-          images_data.push(nft_data);
+          if (nft_data.image.includes("ipfs://")) {
+            nft_data.image = nft_data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+          }
+          const opensea = "https://opensea.io/assets/ethereum/" + contractNftAddress + "/" + all_bundle[i].nftId[j];
+          // console.log(opensea);
+          // images_data.push(nft_data);
+          const auc_data = {
+            "addressNFTCollection": all_bundle[i].addressNFTCollection,
+            "addressPaymentToken": all_bundle[i].addressPaymentToken,
+            "bidCount": all_bundle[i].bidCount,
+            "creator": all_bundle[i].creator,
+            "currentBidOwner": all_bundle[i].currentBidOwner,
+            "currentBidPrice": all_bundle[i].currentBidPrice,
+            "endAuction": all_bundle[i].endAuction,
+            "index": all_bundle[i].index,
+            "nftId": all_bundle[i].nftId,
+            "attributes": "",
+            "description": nft_data.description,
+            "edition": 0,
+            "image": nft_data.image,
+            "name": nft_data.name,
+            "opensea": opensea
+          }
+          auctionData.push(auc_data);
         }
-
-        const auc_data = {
-          "addressNFTCollection": all_bundle[i].addressNFTCollection,
-          "addressPaymentToken": all_bundle[i].addressPaymentToken,
-          "bidCount": all_bundle[i].bidCount,
-          "creator": all_bundle[i].creator,
-          "currentBidOwner": all_bundle[i].currentBidOwner,
-          "currentBidPrice": all_bundle[i].currentBidPrice,
-          "endAuction": all_bundle[i].endAuction,
-          "index": all_bundle[i].index,
-          "nftId": all_bundle[i].nftId,
-          "attributes": images_data[0].attributes,
-          "description": images_data[0].description,
-          "edition": images_data[0].edition,
-          "image": images_data,
-          "name": "Bundle NFTs"
-        }
-
-        auctionData.push(auc_data);
       }
 
       setAuctionDetails(auctionData);
-      // console.log(auctionDetails);
     } catch (err) {
       console.log(err);
     }
@@ -133,49 +143,193 @@ const Home = (props) => {
     const contractAuctionABI = require('../abi/lilfrens_auction_abi.json');
 
     try {
-      window.contract = await new web3.eth.Contract(contractAuctionABI, contractAuctionAddress);
-      const all_single = await window.contract.methods.getAllList().call();
+      window.contract2 = await new web3.eth.Contract(contractAuctionABI, contractAuctionAddress);
+      const all_single = await window.contract2.methods.getAllList().call();
 
       var auctionData = [];
 
       for (var i = 0; i < all_single.length; i++) {
-
         const contractNftABI = require('../abi/lilfrens_nft_abi.json');
         const contractNftAddress = all_single[i].addressNFTCollection;
-        window.contract = await new web3.eth.Contract(contractNftABI, contractNftAddress);
-        const nUrl = await window.contract.methods.tokenURI(all_single[i].nftId).call();
-        const response = await fetch(nUrl);
-        if (!response.ok) {
-          throw new Error('Something went wrong');
-        }
-        const nft_data = await response.json();
-        const auc_data = {
-          "addressNFTCollection": all_single[i].addressNFTCollection,
-          "addressPaymentToken": all_single[i].addressPaymentToken,
-          "bidCount": all_single[i].bidCount,
-          "creator": all_single[i].creator,
-          "currentBidOwner": all_single[i].currentBidOwner,
-          "currentBidPrice": all_single[i].currentBidPrice,
-          "endAuction": all_single[i].endAuction,
-          "index": all_single[i].index,
-          "nftId": all_single[i].nftId,
-          "attributes": nft_data.attributes,
-          "description": nft_data.description,
-          "edition": nft_data.edition,
-          "image": "https://ipfs.infura.io/ipfs/" + nft_data.image.substring(7),
-          "name": nft_data.name
+
+        window.contract3 = await new web3.eth.Contract(contractNftABI, contractNftAddress);
+        // const nUrl = await window.contract3.methods.tokenURI(all_single[i].nftId).call();
+        if (contractNftAddress == "0xF4ee95274741437636e748DdAc70818B4ED7d043") {
+          let nUrl = await window.contract3.methods.baseURI().call();
+          nUrl = nUrl + "/" + all_single[i].nftId
+          const response = await fetch(nUrl);
+          if (!response.ok) {
+            throw new Error('Something went wrong');
+          }
+          const nft_data = await response.json();
+          if (nft_data.image.includes("ipfs://")) {
+            nft_data.image = nft_data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+          }
+          const opensea = "https://opensea.io/assets/ethereum/" + contractNftAddress + "/" + all_single[i].nftId;
+          const auc_data = {
+            "addressNFTCollection": all_single[i].addressNFTCollection,
+            "addressPaymentToken": all_single[i].addressPaymentToken,
+            "bidCount": all_single[i].bidCount,
+            "creator": all_single[i].creator,
+            "currentBidOwner": all_single[i].currentBidOwner,
+            "currentBidPrice": all_single[i].currentBidPrice,
+            "endAuction": all_single[i].endAuction,
+            "index": all_single[i].index,
+            "nftId": all_single[i].nftId,
+            "attributes": nft_data.attributes,
+            "description": nft_data.description,
+            "edition": "",
+            "image": nft_data.image,
+            "name": nft_data.name,
+            "opensea": opensea
+          }
+          auctionData.push(auc_data);
+        } else {
+          try {
+            let nUrl = await window.contract3.methods.tokenURI(all_single[i].nftId).call();
+            if (nUrl.includes("ipfs://")) {
+              nUrl = nUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
+            }
+            const response = await fetch(nUrl);
+            if (!response.ok) {
+              throw new Error('Something went wrong');
+            }
+            const nft_data = await response.json();
+            if (nft_data.image.includes("ipfs://")) {
+              nft_data.image = nft_data.image.replace("ipfs://", "https://ipfs.io/ipfs/");
+            }
+            const opensea = "https://opensea.io/assets/ethereum/" + contractNftAddress + "/" + all_single[i].nftId;
+            const auc_data = {
+              "addressNFTCollection": all_single[i].addressNFTCollection,
+              "addressPaymentToken": all_single[i].addressPaymentToken,
+              "bidCount": all_single[i].bidCount,
+              "creator": all_single[i].creator,
+              "currentBidOwner": all_single[i].currentBidOwner,
+              "currentBidPrice": all_single[i].currentBidPrice,
+              "endAuction": all_single[i].endAuction,
+              "index": all_single[i].index,
+              "nftId": all_single[i].nftId,
+              "attributes": nft_data.attributes,
+              "description": nft_data.description,
+              "edition": "",
+              "image": nft_data.image,
+              "name": nft_data.name,
+              "opensea": opensea
+            }
+            auctionData.push(auc_data);
+          }
+          catch (err) {
+            console.log(err + " " + all_single[i].nftId);
+          }
         }
 
-        auctionData.push(auc_data);
+        // if (i == 1) {
+        //   const auc_data = {
+        //     "addressNFTCollection": all_single[i].addressNFTCollection,
+        //     "addressPaymentToken": all_single[i].addressPaymentToken,
+        //     "bidCount": all_single[i].bidCount,
+        //     "creator": all_single[i].creator,
+        //     "currentBidOwner": all_single[i].currentBidOwner,
+        //     "currentBidPrice": all_single[i].currentBidPrice,
+        //     "endAuction": all_single[i].endAuction,
+        //     "index": all_single[i].index,
+        //     "nftId": all_single[i].nftId,
+        //     "attributes": "",
+        //     "description": "The Doge Pound is 10,000 art pieces carefully chosen by Professor Elon. A unique digital collection of diverse NFTs lying on Ethereum Blockchain. Each one is thoughtfully designed, specifically picked, and impeccably shaped.",
+        //     "edition": 0,
+        //     "image": "https://img.seadn.io/files/c267b85fc23035ccd86c6b59dc346649.png",
+        //     "name": "DOGGY #5696"
+        //   }
+        //   auctionData.push(auc_data);
+        // } else {
+        //   if (all_single[i].nftId == "2657") {
+        //     const auc_data = {
+        //       "addressNFTCollection": all_single[i].addressNFTCollection,
+        //       "addressPaymentToken": all_single[i].addressPaymentToken,
+        //       "bidCount": all_single[i].bidCount,
+        //       "creator": all_single[i].creator,
+        //       "currentBidOwner": all_single[i].currentBidOwner,
+        //       "currentBidPrice": all_single[i].currentBidPrice,
+        //       "endAuction": all_single[i].endAuction,
+        //       "index": all_single[i].index,
+        //       "nftId": all_single[i].nftId,
+        //       "attributes": "",
+        //       "description": "Funk, meet web 3. A collection of 8,888 unique digital hippies that are building the new free world before our eyes.",
+        //       "edition": 0,
+        //       "image": "https://img.seadn.io/files/dfff63c2151d7cebf3786d500e885194.png",
+        //       "name": "Dippie #2657"
+        //     }
+        //     auctionData.push(auc_data);
+        //   }
+        //   else if (all_single[i].nftId == "5215") {
+        //     const auc_data = {
+        //       "addressNFTCollection": all_single[i].addressNFTCollection,
+        //       "addressPaymentToken": all_single[i].addressPaymentToken,
+        //       "bidCount": all_single[i].bidCount,
+        //       "creator": all_single[i].creator,
+        //       "currentBidOwner": all_single[i].currentBidOwner,
+        //       "currentBidPrice": all_single[i].currentBidPrice,
+        //       "endAuction": all_single[i].endAuction,
+        //       "index": all_single[i].index,
+        //       "nftId": all_single[i].nftId,
+        //       "attributes": "",
+        //       "description": "The on-chain idle MMO.",
+        //       "edition": 0,
+        //       "image": "https://img.seadn.io/files/0a84166204b227d619728b7cd80203ad.png",
+        //       "name": "Hero #5215"
+        //     }
+        //     auctionData.push(auc_data);
+        //   }
+        //   else {
+        //     const nUrl = await window.contract3.methods.tokenURI(all_single[i].nftId).call();
+        //     const response = await fetch("https://opensea.mypinata.cloud/ipfs/" + nUrl.substring(7));
+        //     if (!response.ok) {
+        //       throw new Error('Something went wrong');
+        //     }
+        //     const nft_data = await response.json();
+        //     const auc_data = {
+        //       "addressNFTCollection": all_single[i].addressNFTCollection,
+        //       "addressPaymentToken": all_single[i].addressPaymentToken,
+        //       "bidCount": all_single[i].bidCount,
+        //       "creator": all_single[i].creator,
+        //       "currentBidOwner": all_single[i].currentBidOwner,
+        //       "currentBidPrice": all_single[i].currentBidPrice,
+        //       "endAuction": all_single[i].endAuction,
+        //       "index": all_single[i].index,
+        //       "nftId": all_single[i].nftId,
+        //       "attributes": nft_data.attributes,
+        //       "description": nft_data.description,
+        //       "edition": nft_data.edition,
+        //       "image": "https://ipfs.infura.io/ipfs/" + nft_data.image.substring(7),
+        //       "name": nft_data.name
+        //     }
+        //     auctionData.push(auc_data);
+        //   }
+        // }
+
       }
-
       setAuctionDetailsS(auctionData);
-      // console.log(auctionDetailsS);
-
     } catch (err) {
       console.log(err);
     }
   };
+
+  const getFrensCount = async () => {
+
+    //Contract Interaction
+    const web3 = new Web3(window.ethereum);
+    const contractABI = require('../abi/lilfrens_token_abi.json');
+
+    try {
+      //Approve Token
+      window.contract = await new web3.eth.Contract(contractABI, tokenContract);
+      const balance = await window.contract.methods.balanceOf(window.ethereum.selectedAddress).call();
+      const bal = parseInt(ethers.utils.formatEther(balance));
+      setFrensCount(bal.toLocaleString());
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleModal = async (myArray) => {
     setCurrBid(parseInt(ethers.utils.formatEther(myArray.currentBidPrice)));
@@ -209,6 +363,69 @@ const Home = (props) => {
     setBidS("");
     setIndexS("");
     setshowPopupS(!showPopupS);
+  }
+
+  const claim = async (index) => {
+
+    //Contract Interaction
+    const web3 = new Web3(window.ethereum);
+    const auction_contractABI = require('../abi/lilfrens_auction_abi.json');
+
+    try {
+      //Claim Bundle NFTs
+      window.contract = await new web3.eth.Contract(auction_contractABI, contractAuctionAddress);
+      //set up your Ethereum transaction
+      const transactionParametersClaim = {
+        to: contractAuctionAddress, // Required except during contract publications.
+        from: window.ethereum.selectedAddress, // must match user's active address.
+        'data': window.contract.methods.claimBundleNFT(index).encodeABI()//make call to NFT smart contract
+      };
+      //sign the transaction via Metamask
+      const txHashBid = await window.ethereum
+        .request({
+          method: 'eth_sendTransaction',
+          params: [transactionParametersClaim],
+        });
+
+      await timeout(5000);
+      toast("✅ NFTs Claimed Successfully");
+      await timeout(1000);
+      window.location.reload(false);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const claimS = async (index) => {
+
+    //Contract Interaction
+    const web3 = new Web3(window.ethereum);
+    const auction_contractABI = require('../abi/lilfrens_auction_abi.json');
+
+    try {
+      //Claim Bundle NFTs
+      window.contract = await new web3.eth.Contract(auction_contractABI, contractAuctionAddress);
+      //set up your Ethereum transaction
+      const transactionParametersClaim = {
+        to: contractAuctionAddress, // Required except during contract publications.
+        from: window.ethereum.selectedAddress, // must match user's active address.
+        'data': window.contract.methods.claimNFT(index).encodeABI()//make call to NFT smart contract
+      };
+      //sign the transaction via Metamask
+      const txHashBid = await window.ethereum
+        .request({
+          method: 'eth_sendTransaction',
+          params: [transactionParametersClaim],
+        });
+
+      await timeout(5000);
+      toast("✅ NFT Claimed Successfully");
+      await timeout(1000);
+      window.location.reload(false);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const placeBid = async (index, finalBid) => {
@@ -524,14 +741,14 @@ const Home = (props) => {
             <div className="col-sm-7">
               <ul className="navigation">
                 <li>
-                  <a className="nav-links" href="#">
+                  <a className="nav-links" href="/">
                     Home
                   </a>
                 </li>
 
                 <li>
                   <a className="nav-links" href="#">
-                    My NFT's
+                    {frensCount} $FREN
                   </a>
                 </li>
 
@@ -565,16 +782,13 @@ const Home = (props) => {
               <div className="text-wrapper">
                 <div className="text-wrapping">
                   <h1 className="first-tit">
-                    Join The Mega Auction
+                    Lil Auction House
                     <br />
-                    <span className="sellauction">Bundles of NFTs</span>
+                    <span className="sellauction">Bid & Raffle on NFTs with $fren!</span>
                     <br />
-                    <span className="lilfrens">Lil Deployer NFTs</span>
+                    <span className="lilfrens">Our precursor to the rainbow
+                      marketplace</span>
                   </h1>
-                  <p>
-                    <strong>Auction Page For Lil Deployer Collections Non
-                      Fungible Token NFTs</strong>
-                  </p>
                   <div className="btn-wrapper">
                     <a className="banner-btn" href="#auctions_sec">
                       <img src={bannerbtnicon} alt="" /> Auctions
@@ -604,20 +818,20 @@ const Home = (props) => {
                 {auctionDetails.length > 0 ?
                   <><div className="for-overlay">
                     <div className="for-flexing">
-                      <div className="first-coloum">
+                      {/* <div className="first-coloum">
                         <img src={first} alt="" />
-                      </div>
+                      </div> */}
                       <div className="second-coloum">
                         <h3 className="creative">
                           Lil Deployer
                           <br /> {auctionDetails[0].name}
                         </h3>
-                        <p className="createdby">
+                        {/* <p className="createdby">
                           Created By: <br />
                           {auctionDetails[0].creator.substring(0, 6)} .........{auctionDetails[0].creator.substring(35)}
-                        </p>
+                        </p> */}
                       </div>
-                      <div className="third-coloum">
+                      <div className="third-coloum" style={{ marginLeft: 'auto' }}>
                         <p className="heart">
                           <img className="heart" src={heart} alt="" />
                           {auctionDetails[0].bidCount}
@@ -630,21 +844,35 @@ const Home = (props) => {
 
                     <div className="for-flexing five-image">
 
-                      <img className="fren1 first-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[0].image.substring(7)} alt="" />
+                      {/* <img className="fren1 first-img" src={"https://img.seadn.io/files/af52206910d2a2ce8b50455dec292a0a.png"} alt="" /> */}
 
                       {/* <img className="fren1 first-img" src={imgBundles.map[0]} alt="" /> */}
+
                       <div className="fourwrap">
                         <div>
-                          <img className="fren1 second-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[1].image.substring(7)} alt="" />
-                          <img className="fren1 third-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[2].image.substring(7)} alt="" />
+
+
+                          {auctionDetails.map((item, idx) => {
+                            return (
+                              <a href={item.opensea} target="_blank"><img key={idx} className="fren1 second-img" src={item.image} alt="" /></a>
+                            )
+                          })}
+                          {/* 
+                          <img className="fren1 second-img" src={"https://img.seadn.io/files/6be7bff732e22951aca03378933cc36e.png"} alt="" />
+                          <img className="fren1 third-img" src={"https://img.seadn.io/files/26df582c16e9c9094a032454c1536db9.png"} alt="" />
+                          <img className="fren1 second-img" src={"https://img.seadn.io/files/6be7bff732e22951aca03378933cc36e.png"} alt="" />
+                          <img className="fren1 third-img" src={"https://img.seadn.io/files/26df582c16e9c9094a032454c1536db9.png"} alt="" />
+                          <img className="fren1 second-img" src={"https://img.seadn.io/files/6be7bff732e22951aca03378933cc36e.png"} alt="" />
+                          <img className="fren1 third-img" src={"https://img.seadn.io/files/26df582c16e9c9094a032454c1536db9.png"} alt="" /> */}
                           {/* {person.firstName} */}
                         </div>
                         <div>
-                          <img className="fren1 fourth-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[3].image.substring(7)} alt="" />
-                          <img className="fren1 fifth-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[4].image.substring(7)} alt="" />
+                          {/* <img className="fren1 fourth-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[3].image.substring(7)} alt="" />
+                          <img className="fren1 fifth-img" src={"https://ipfs.infura.io/ipfs/" + auctionDetails[0].image[4].image.substring(7)} alt="" /> */}
                         </div>
                       </div>
                     </div>
+
                     <div className="timer">
                       <img className="time-icon" src={timeicon} alt="" />
                       {(new Date()) > (new Date(parseInt(auctionDetails[0].endAuction) * 1000))
@@ -659,24 +887,40 @@ const Home = (props) => {
                     id="place-a-bid-btn"
                     className="place-bid"
                   >
-                      {(new Date()) > (new Date(parseInt(auctionDetails[0].endAuction) * 1000))
+                      {((new Date()) > (new Date(parseInt(auctionDetails[0].endAuction) * 1000))) && (auctionDetails[0].currentBidOwner.toString().toLowerCase() === window.ethereum.selectedAddress.toString().toLowerCase())
                         ?
                         <Button
                           id="place-btn"
                           className="place-bid-btn"
-                          disabled
+                          onClick={() => claim(auctionDetails[0].index)}
                         >
-                          Claim - Coming Soon
+                          Claim NFTs
                         </Button>
+                        // <Button
+                        //   id="place-btn"
+                        //   className="place-bid-btn"
+                        //   disabled
+                        // >
+                        //   Claim - Coming Soon
+                        // </Button>
                         :
-                        <Button
-                          id="place-btn"
-                          className="place-bid-btn"
-                          onClick={() => handleModal(auctionDetails[0])}
-                        >
-                          <img className="placebidico" src={placebid} alt="" /> Place
-                          Bid
-                        </Button>}
+                        ((new Date()) > (new Date(parseInt(auctionDetails[0].endAuction) * 1000))) ?
+                          <Button
+                            id="place-btn"
+                            className="place-bid-btn"
+                            disabled
+                          >
+                            Bidding Closed
+                          </Button>
+                          :
+                          <Button
+                            id="place-btn"
+                            className="place-bid-btn"
+                            onClick={() => handleModal(auctionDetails[0])}
+                          >
+                            <img className="placebidico" src={placebid} alt="" /> Place
+                            Bid
+                          </Button>}
 
                       {/* <Button
       id="claim-btn"
@@ -721,10 +965,8 @@ const Home = (props) => {
                     <div className="col-sm-3">
                       <div>
                         <div className="full-card s secondcard"
-                        // onMouseEnter={() => onmouseEnters()}
-                        // onMouseLeave={() => onmouseLeaves()}
                         >
-                          <img className="fren" src={item.image} alt="" />
+                          <a href={item.opensea} target="_blank"><img className="fren" src={item.image} alt="" /></a>
                           <div className="timers">
                             <img className="time-icon" src={timeicon} alt="" />
                             {(new Date()) > (new Date(parseInt(item.endAuction) * 1000))
@@ -746,7 +988,7 @@ const Home = (props) => {
                             </div>
 
                             <div className="secone-one">
-                              <div className="bsc">ETH</div>
+                              <div className="bsc">FRENS</div>
                             </div>
                           </div>
 
@@ -754,12 +996,12 @@ const Home = (props) => {
                             <div className="img-two-text">
                               <div className="for-flexing">
                                 <div>
-                                  <img className="prof-img" src={item.image} alt="" />
+                                  <a href={item.opensea} target="_blank"> <img className="prof-img" src={item.image} alt="" /></a>
                                 </div>
-                                <div className="creator-details">
+                                {/* <div className="creator-details">
                                   <p className="current-bid">Creator</p>
                                   <p className="frens">{item.creator.substring(0, 3)}........{item.creator.substring(37)}</p>
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                             <div>
@@ -775,24 +1017,40 @@ const Home = (props) => {
                           // onmouseLeaves={() => this.onmouseLeaves()}
                           >
 
-                            {(new Date()) > (new Date(parseInt(item.endAuction) * 1000))
+                            {(new Date()) > (new Date(parseInt(item.endAuction) * 1000)) && (item.currentBidOwner.toString().toLowerCase() === window.ethereum.selectedAddress.toString().toLowerCase())
                               ?
                               <Button
                                 id="place-btn"
                                 className="place-bid-btn"
-                                disabled
+                                onClick={() => claimS(item.index)}
                               >
-                                Claim - Coming Soon
+                                Claim NFT
                               </Button>
+                              // <Button
+                              //   id="place-btn"
+                              //   className="place-bid-btn"
+                              //   disabled
+                              // >
+                              //   Claim - Coming Soon
+                              // </Button>
                               :
-                              <Button
-                                id="place-btn"
-                                className="place-bid-btn"
-                                onClick={() => handleModalS(item)}
-                              >
-                                <img className="placebidico" src={placebid} alt="" /> Place
-                                Bid
-                              </Button>}
+                              ((new Date()) > (new Date(parseInt(item.endAuction) * 1000))) ?
+                                <Button
+                                  id="place-btn"
+                                  className="place-bid-btn"
+                                  disabled
+                                >
+                                  Bidding Closed
+                                </Button>
+                                :
+                                <Button
+                                  id="place-btn"
+                                  className="place-bid-btn"
+                                  onClick={() => handleModalS(item)}
+                                >
+                                  <img className="placebidico" src={placebid} alt="" /> Place
+                                  Bid
+                                </Button>}
 
                             {/* <Button
                               id="claim-btn"
