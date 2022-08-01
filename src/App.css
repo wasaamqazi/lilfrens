@@ -236,13 +236,13 @@ img.heart {
 .disabled {
   padding: 0 10px;
 }
-
 .full-card-active {
   background: white;
   padding: 10px;
   border-radius: 10px;
+  max-width: 348px;
+  margin: 0 auto;
 }
-
 /* img.fren1.first-img {
   max-width: 170px;
   padding: 38px 0px;
@@ -476,8 +476,10 @@ img.fren1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 379px;
+  max-width: 348px;
+  margin: 0 auto;
 }
-
 a.coming-soon {
   background: #B2E916;
   box-shadow: 0px 0px 14.2599px rgba(178, 233, 22, 0.8);
@@ -632,7 +634,228 @@ button.place-bid-btn.btn.btn-primary {
   width: 90%;
   /* margin: 0 0px; */
 }
-
+.minbids{
+  font-weight: 600;
+         font-family: "Montserrat Alternates";
+}
 a.footer-links:hover {
   color: #eaeaea;
+}
+.modal-content {
+  
+  padding: 25px 0px !important;
+}
+@media (max-width:992px) {
+  ul.footer-links {
+    margin: 0;
+    display: flex;
+    padding: 0;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+@media (max-width:1400px) {
+  p.frens {
+   
+    font-size: 13px;
+   
+}
+}
+
+@media (min-width:992px) AND (max-width:1400px) {
+  .text-wrapper {
+   
+    top: 250px;
+}
+}
+
+@media (min-width:768px) AND (max-width:992px) {
+  .text-wrapper {
+   
+    top: 200px;
+}
+}
+
+@media (max-width:767px) {
+  .text-wrapper {
+   
+    top: 150px;
+}
+}
+
+.full-card {
+ 
+  max-width: 304px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+@media (max-width:767px) {
+  .footer-social-wrap {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (min-width:1200px) {
+  img.hamburger{
+    display: none;
+  }
+}
+@media (max-width:1200px) {
+  ul.navigation{
+    display: none;
+  }
+  img.hamburger {
+    margin-left: auto;
+    display: block;
+    width: 35px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 999;
+  }
+  ul#for-haming {
+    position: absolute;
+    background: #ff50f4;
+    width: 100%;
+    left: 0;
+    padding-bottom: 42px;
+    z-index: 999;
+    top:65px;
+}
+ul#for-haming li {
+  margin-top: 32px;
+}
+header {
+  padding-top: 0px;
+ 
+}
+}
+
+.mystyle{
+  display: block !important;
+}
+
+@media (max-width:734px) {
+  .text-wrapper {
+    top: 57px;
+}  
+img.logo {
+  width: 140px;
+  margin-top: 13px;
+}
+.btn-wrapper {
+  padding-top: 10px;
+}
+h1.first-tit {
+ 
+  font-size: 14px;
+}
+a.banner-btn {
+ 
+  font-size: 13px;
+}
+}
+
+@media (min-width:375px) AND (max-width:480px) {
+  h1.first-tit {
+    font-size: 18px;
+}
+}
+@media (min-width:391px) AND (max-width:480px) {
+  h1.first-tit {
+    font-size: 19px;
+}
+}
+@media (min-width:480px) AND (max-width:767px) {
+  h1.first-tit {
+    font-size: 26px;
+}
+}
+
+
+
+@media (max-width:576px) {
+  h3.liveaction {
+   
+    font-size: 30px;
+ 
+}
+}
+
+@media (min-width:576px) AND (max-width:767px) {
+  p.heart.second-heart {
+    bottom: 204px;
+    right: -122px;
+}
+}
+
+@media (min-width:1200px) AND (max-width:1400px) {
+  p.heart.second-heart {
+   
+    bottom: 240px;
+   
+    right: -153px;
+   
+}
+}
+
+@media (max-width:480px) {
+  span.lilfrens {
+    color: #000000;
+    text-shadow: 0px 3px 2px rgb(255 255 255 / 42%);
+}
+.sellauction {
+  color: #000000;
+}
+h1.first-tit {
+ 
+  color: #000000;
+  text-shadow: 0px 3px 2px rgb(255 255 255 / 42%);
+}
+footer {
+  padding: 80px 0px;
+}
+}
+
+@media (max-width:992px) {
+  .bundles-container .col-sm-6:last-child {
+    margin-top: 20px;
+}
+}
+
+
+@media (max-width:576px) {
+  .bundles-container .col-sm-6:nth-child(2) {
+    margin-top: 20px;
+}
+}
+
+@media (max-width:576px) {
+  h3.liveaction {
+   
+   
+    padding-bottom: 30px;
+    text-align: center;
+    padding-left: 0px;
+}
+.full-card-active {
+ 
+  padding: 33px 10px;
+}
+}
+
+@media (max-width:356px) {
+  p.must-bid {
+  
+    font-size: 13px;
+}
+.minbids{
+  font-size: 13px;
+}
 }
