@@ -270,16 +270,16 @@ const Home = (props) => {
     setCurrBid(parseInt(ethers.utils.formatEther(myArray.currentBidPrice)));
     setCurrBidder(
       myArray.currentBidOwner.substring(0, 5) +
-      "........" +
-      myArray.currentBidOwner.substring(35)
+        "........" +
+        myArray.currentBidOwner.substring(35)
     );
     setMinBid(
       parseInt(ethers.utils.formatEther(myArray.currentBidPrice)) +
-      (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
+        (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
     );
     setBid(
       parseInt(ethers.utils.formatEther(myArray.currentBidPrice)) +
-      (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
+        (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
     );
     setshowPopup(!showPopup);
   };
@@ -296,16 +296,16 @@ const Home = (props) => {
     setCurrBidS(parseInt(ethers.utils.formatEther(myArray.currentBidPrice)));
     setCurrBidderS(
       myArray.currentBidOwner.substring(0, 5) +
-      "........" +
-      myArray.currentBidOwner.substring(35)
+        "........" +
+        myArray.currentBidOwner.substring(35)
     );
     setMinBidS(
       parseInt(ethers.utils.formatEther(myArray.currentBidPrice)) +
-      (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
+        (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
     );
     setBidS(
       parseInt(ethers.utils.formatEther(myArray.currentBidPrice)) +
-      (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
+        (5 * parseInt(ethers.utils.formatEther(myArray.currentBidPrice))) / 100
     );
     setIndexS(myArray.index);
     setshowPopupS(!showPopupS);
@@ -609,10 +609,12 @@ const Home = (props) => {
       <header>
         <div className="container">
           <div className="row">
-            <div className="col-sm-5 col-5">
-              <img className="logo" src={logo} alt="" />
+            <div className="col-sm-3 col-5">
+              <a href="/">
+                <img className="logo" src={logo} alt="" />
+              </a>
             </div>
-            <div className="col-sm-7 col-7">
+            <div className="col-sm-9 col-7">
               <ul id="for-haming" className="navigation">
                 <li>
                   <a className="nav-links" href="/">
@@ -660,7 +662,7 @@ const Home = (props) => {
           <div className="row">
             <div className="col-sm-12">
               <div className="text-wrapper">
-                <div className="text-wrapping">
+                <div className="text-wrapping" data-aos="slide-down">
                   <h1 className="first-tit">
                     Lil Auction House
                     <br />
@@ -685,16 +687,18 @@ const Home = (props) => {
       </section>
       <section id="auctions_sec" className="bbody">
         <div className="container">
-          <div className="row">
+          <div className="row" data-aos="fade-down">
             <h3 className="liveaction">Live Bundles Auction</h3>
           </div>
         </div>
         <div className="container bundles-container">
           <div className="row">
-            <div className="col-sm-6 col-lg-4 col-xl-3">
-              <div
-                className="full-card-active"
-              >
+            <div
+              className="col-sm-12 col-md-6 col-lg-4 col-xl-4"
+              data-aos="fade"
+              data-aos-duration="1000"
+            >
+              <div className="full-card-active">
                 {auctionDetails.length > 0 ? (
                   <>
                     <div className="for-overlay">
@@ -740,17 +744,16 @@ const Home = (props) => {
                               );
                             })}
                           </div>
-                          <div>
-                          </div>
+                          <div></div>
                         </div>
                       </div>
 
                       <div className="timer">
                         <img className="time-icon" src={timeicon} alt="" />
                         {new Date() >
-                          new Date(
-                            parseInt(auctionDetails[0].endAuction) * 1000
-                          ) ? (
+                        new Date(
+                          parseInt(auctionDetails[0].endAuction) * 1000
+                        ) ? (
                           <span className="auction_closed">Auction Closed</span>
                         ) : (
                           <Countdown
@@ -769,9 +772,9 @@ const Home = (props) => {
                         new Date(
                           parseInt(auctionDetails[0].endAuction) * 1000
                         ) &&
-                        auctionDetails[0].currentBidOwner
-                          .toString()
-                          .toLowerCase() ===
+                      auctionDetails[0].currentBidOwner
+                        .toString()
+                        .toLowerCase() ===
                         window.ethereum.selectedAddress
                           .toString()
                           .toLowerCase() ? (
@@ -782,28 +785,27 @@ const Home = (props) => {
                         >
                           Claim NFTs
                         </Button>
-                      ) :
-                        new Date() >
-                          new Date(
-                            parseInt(auctionDetails[0].endAuction) * 1000
-                          ) ? (
-                          <Button
-                            id="place-btn"
-                            className="place-bid-btn"
-                            disabled
-                          >
-                            Bidding Closed
-                          </Button>
-                        ) : (
-                          <Button
-                            id="place-btn"
-                            className="place-bid-btn"
-                            onClick={() => handleModal(auctionDetails[0])}
-                          >
-                            <img className="placebidico" src={placebid} alt="" />{" "}
-                            Place Bid
-                          </Button>
-                        )}
+                      ) : new Date() >
+                        new Date(
+                          parseInt(auctionDetails[0].endAuction) * 1000
+                        ) ? (
+                        <Button
+                          id="place-btn"
+                          className="place-bid-btn"
+                          disabled
+                        >
+                          Bidding Closed
+                        </Button>
+                      ) : (
+                        <Button
+                          id="place-btn"
+                          className="place-bid-btn"
+                          onClick={() => handleModal(auctionDetails[0])}
+                        >
+                          <img className="placebidico" src={placebid} alt="" />{" "}
+                          Place Bid
+                        </Button>
+                      )}
                     </div>
                   </>
                 ) : (
@@ -811,14 +813,22 @@ const Home = (props) => {
                 )}
               </div>
             </div>
-            <div className="col-sm-6 col-lg-4 col-xl-3">
+            <div
+              className="col-sm-12 col-md-6 col-lg-4 col-xl-4 second-card-ncontainer"
+              data-aos="fade"
+              data-aos-duration="1000"
+            >
               <div className="disabled">
                 <div className="coming-soon">
                   <a className="coming-soon">Coming Soon</a>
                 </div>
               </div>
             </div>
-            <div className="col-sm-6 col-lg-4 col-xl-3">
+            <div
+              className="col-sm-12 col-md-6 col-lg-4 col-xl-4"
+              data-aos="fade"
+              data-aos-duration="1000"
+            >
               <div className="disabled">
                 <div className="coming-soon">
                   <a className="coming-soon">Coming Soon</a>
@@ -828,7 +838,7 @@ const Home = (props) => {
           </div>
         </div>
         <div className="container">
-          <div className="row">
+          <div className="row" data-aos="slide-down">
             <h3 style={{ paddingTop: "80px" }} className="liveaction">
               Live Auctions
             </h3>
@@ -837,7 +847,12 @@ const Home = (props) => {
             {auctionDetailsS.length > 0 ? (
               auctionDetailsS.map((item, index) => {
                 return (
-                  <div className="col-sm-6 col-lg-4 col-xl-3">
+                  <div
+                    className="col-sm-6 col-lg-4 col-xl-3"
+                    data-aos="fade"
+                    data-aos-duration="1000"
+                    data-aos-delay="300"
+                  >
                     <div>
                       <div className="full-card s secondcard">
                         <a href={item.opensea} target="_blank">
@@ -846,7 +861,7 @@ const Home = (props) => {
                         <div className="timers">
                           <img className="time-icon" src={timeicon} alt="" />
                           {new Date() >
-                            new Date(parseInt(item.endAuction) * 1000) ? (
+                          new Date(parseInt(item.endAuction) * 1000) ? (
                             <span className="auction_closed">
                               Auction Closed
                             </span>
@@ -899,13 +914,10 @@ const Home = (props) => {
                             </div>
                           </div>
                         </div>
-                        <div
-                          id="place-a-bid-btn"
-                          className="place-bid"
-                        >
+                        <div id="place-a-bid-btn" className="place-bid">
                           {new Date() >
                             new Date(parseInt(item.endAuction) * 1000) &&
-                            item.currentBidOwner.toString().toLowerCase() ===
+                          item.currentBidOwner.toString().toLowerCase() ===
                             window.ethereum.selectedAddress
                               .toString()
                               .toLowerCase() ? (
@@ -916,30 +928,29 @@ const Home = (props) => {
                             >
                               Claim NFT
                             </Button>
-                          ) :
-                            new Date() >
-                              new Date(parseInt(item.endAuction) * 1000) ? (
-                              <Button
-                                id="place-btn"
-                                className="place-bid-btn"
-                                disabled
-                              >
-                                Bidding Closed
-                              </Button>
-                            ) : (
-                              <Button
-                                id="place-btn"
-                                className="place-bid-btn"
-                                onClick={() => handleModalS(item)}
-                              >
-                                <img
-                                  className="placebidico"
-                                  src={placebid}
-                                  alt=""
-                                />{" "}
-                                Place Bid
-                              </Button>
-                            )}
+                          ) : new Date() >
+                            new Date(parseInt(item.endAuction) * 1000) ? (
+                            <Button
+                              id="place-btn"
+                              className="place-bid-btn"
+                              disabled
+                            >
+                              Bidding Closed
+                            </Button>
+                          ) : (
+                            <Button
+                              id="place-btn"
+                              className="place-bid-btn"
+                              onClick={() => handleModalS(item)}
+                            >
+                              <img
+                                className="placebidico"
+                                src={placebid}
+                                alt=""
+                              />{" "}
+                              Place Bid
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -954,9 +965,9 @@ const Home = (props) => {
         <footer>
           <div className="container">
             <div className="row">
-              <div className="col-sm-7">
+              <div className="col-sm-9">
                 <ul className="footer-links">
-                  <li className="footer-single">
+                  <li className="footer-single" data-aos="fade">
                     <a
                       className="footer-links"
                       href="https://www.lilfrens.xyz/"
@@ -965,33 +976,75 @@ const Home = (props) => {
                       About Lilfrens
                     </a>
                   </li>
-                  <li className="footer-single">
+                  <li
+                    className="footer-single"
+                    data-aos="fade"
+                    data-aos-delay="300"
+                  >
                     <a className="footer-links" href="#">
                       ADVERTISING
                     </a>
                   </li>
-                  <li className="footer-single">
+                  <li
+                    className="footer-single"
+                    data-aos="fade"
+                    data-aos-delay="500"
+                  >
                     <a className="footer-links" href="#">
                       Help/Faq
                     </a>
                   </li>
-                  <li className="footer-single">
+                  <li
+                    className="footer-single"
+                    data-aos="fade"
+                    data-aos-delay="700"
+                  >
                     <a className="footer-links" href="mailto:info@LilFrens.xyz">
                       Info@LilFrens.xyz
                     </a>
                   </li>
                 </ul>
               </div>
-              <div className="col-sm-5">
+              <div className="col-sm-3">
                 <div className="footer-social-wrap">
                   <div className="social-wrap">
-                    <img className="social-imgs" src={foot1} alt="" />
-                    <img className="social-imgs" src={foot2} alt="" />
-                    <img className="social-imgs" src={foot3} alt="" />
+                    <img
+                      className="social-imgs"
+                      src={foot1}
+                      alt=""
+                      data-aos="fade"
+                      data-aos-delay="900"
+                    />
+                    <img
+                      className="social-imgs"
+                      src={foot2}
+                      alt=""
+                      data-aos="fade"
+                      data-aos-delay="1100"
+                    />
+                    <img
+                      className="social-imgs"
+                      src={foot3}
+                      alt=""
+                      data-aos="fade"
+                      data-aos-delay="1300"
+                    />
                     <a href="https://twitter.com/thelilfrens" target="_blank">
-                      <img className="social-imgs" src={foot4} alt="" />
+                      <img
+                        className="social-imgs"
+                        src={foot4}
+                        alt=""
+                        data-aos="fade"
+                        data-aos-delay="1500"
+                      />
                     </a>
-                    <img className="social-imgs" src={foot5} alt="" />
+                    <img
+                      className="social-imgs"
+                      src={foot5}
+                      alt=""
+                      data-aos="fade"
+                      data-aos-delay="1700"
+                    />
                   </div>
                 </div>
               </div>

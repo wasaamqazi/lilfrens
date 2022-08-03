@@ -240,7 +240,7 @@ img.heart {
   background: white;
   padding: 10px;
   border-radius: 10px;
-  max-width: 348px;
+  /* max-width: 348px; */
   margin: 0 auto;
 }
 /* img.fren1.first-img {
@@ -476,8 +476,8 @@ img.fren1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 379px;
-  max-width: 348px;
+  
+  
   margin: 0 auto;
 }
 a.coming-soon {
@@ -690,8 +690,8 @@ a.footer-links:hover {
 
 .full-card {
  
-  max-width: 304px;
-  margin: 0 auto;
+
+
   margin-bottom: 20px;
 }
 
@@ -824,14 +824,14 @@ footer {
 }
 
 @media (max-width:992px) {
-  .bundles-container .col-sm-6:last-child {
+  .bundles-container .col-sm-12:last-child {
     margin-top: 20px;
 }
 }
 
 
-@media (max-width:576px) {
-  .bundles-container .col-sm-6:nth-child(2) {
+@media (max-width:767px) {
+  .bundles-container .col-sm-12:nth-child(2) {
     margin-top: 20px;
 }
 }
@@ -858,4 +858,19 @@ footer {
 .minbids{
   font-size: 13px;
 }
+}
+
+
+@media (min-width:1200px) AND (max-width:1400px) {
+  
+  h3.creative.second {
+    min-height: 41px;
+}
+}
+
+
+@media (max-width:1199px) {
+  .disabled{
+    min-height: 379px;
+  }
 }
